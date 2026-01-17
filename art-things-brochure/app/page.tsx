@@ -7,73 +7,19 @@ import ProductGrid from "@/components/product-grid"
 import ProductDetail from "@/components/product-detail"
 
 const PRODUCTS = [
-  {
-    id: 1,
-    name: "Marble Table Lamp",
-    category: "Lighting",
-    price: "$299",
-    image: "/elegant-marble-table-lamp-premium.jpg",
-    description: "Handcrafted marble base with brushed brass accents. Perfect for any luxury space.",
-  },
-  {
-    id: 2,
-    name: "Ceramic Vase Set",
-    category: "Decor",
-    price: "$189",
-    image: "/modern-ceramic-vase-collection.jpg",
-    description: "Three-piece ceramic vase set in natural earth tones.",
-  },
-  {
-    id: 3,
-    name: "Velvet Accent Chair",
-    category: "Furniture",
-    price: "$799",
-    image: "/luxury-velvet-armchair-modern.jpg",
-    description: "Luxurious velvet upholstery with solid wood frame.",
-  },
-  {
-    id: 4,
-    name: "Wall Art Canvas",
-    category: "Art",
-    price: "$459",
-    image: "/abstract-wall-art-canvas-painting.jpg",
-    description: "Large format canvas art piece. Ready to hang.",
-  },
-  {
-    id: 5,
-    name: "Brass Plant Stand",
-    category: "Decor",
-    price: "$249",
-    image: "/mid-century-modern-brass-plant-stand.jpg",
-    description: "Vintage-inspired brass plant stand with three tiers.",
-  },
-  {
-    id: 6,
-    name: "Linen Sofa",
-    category: "Furniture",
-    price: "$1,299",
-    image: "/luxury-linen-sofa-modern-living-room.jpg",
-    description: "Comfortable and durable natural linen construction.",
-  },
-  {
-    id: 7,
-    name: "Geometric Rug",
-    category: "Decor",
-    price: "$549",
-    image: "/geometric-patterned-area-rug-modern.jpg",
-    description: "Hand-woven geometric pattern in neutral colors.",
-  },
-  {
-    id: 8,
-    name: "Glass Pendant Lights",
-    category: "Lighting",
-    price: "$389",
-    image: "/designer-glass-pendant-lights-fixture.jpg",
-    description: "Set of three handblown glass pendant lights.",
-  },
+  // Add your products here
+  // Example structure:
+  // {
+  //   id: 1,
+  //   name: "Product Name",
+  //   category: "Category",
+  //   price: "$Price",
+  //   image: "/your-image.jpg",
+  //   description: "Product description",
+  // },
 ]
 
-const CATEGORIES = ["All", "Furniture", "Lighting", "Decor", "Art"]
+const CATEGORIES = ["All"] // Add your categories here
 
 export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState(null)
