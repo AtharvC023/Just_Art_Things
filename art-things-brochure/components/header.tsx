@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { Menu, X, ShoppingCart } from "lucide-react"
+import { Menu, X, Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isDark, setIsDark] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,7 +18,15 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const navItems = ["Home", "Shop", "About", "Contact"]
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [isDark])
+
+  const navItems = ["Home", "About", "Contact"]
 
   return (
     <motion.header
@@ -47,11 +56,13 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="relative hidden md:flex">
-            <ShoppingCart size={20} className="text-foreground" />
-            <span className="absolute top-1 right-1 h-4 w-4 bg-primary rounded-full text-xs text-primary-foreground flex items-center justify-center text-center">
-              0
-            </span>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={() => setIsDark(!isDark)}
+            className="text-foreground"
+          >
+            {isDark ? <Sun size={20} /> : <Moon size={20} />}
           </Button>
 
           <button className="md:hidden text-foreground" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>

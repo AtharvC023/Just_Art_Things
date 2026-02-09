@@ -11,7 +11,6 @@ const PRODUCTS = [
     id: 1,
     name: "Custom Portrait Frame",
     category: "Frames",
-    price: "$49.99",
     image: "/Custom Portrait Frame.jpeg",
     description: "Beautiful custom portrait frame for your cherished memories",
   },
@@ -19,7 +18,6 @@ const PRODUCTS = [
     id: 2,
     name: "Custom Portrait Frame (Premium)",
     category: "Frames",
-    price: "$59.99",
     image: "/Custom Portrait Frame (2).jpeg",
     description: "Premium custom portrait frame with elegant design",
   },
@@ -27,7 +25,6 @@ const PRODUCTS = [
     id: 3,
     name: "Golden Diya Decor",
     category: "Decor",
-    price: "$29.99",
     image: "/Golden Diya Decor.jpeg",
     description: "Elegant golden diya for festive decoration",
   },
@@ -35,7 +32,6 @@ const PRODUCTS = [
     id: 4,
     name: "Festive Resin Diya",
     category: "Decor",
-    price: "$24.99",
     image: "/Festive Resin Diya.png",
     description: "Handcrafted festive resin diya",
   },
@@ -43,7 +39,6 @@ const PRODUCTS = [
     id: 5,
     name: "Floral & Gold Heart Charm",
     category: "Accessories",
-    price: "$19.99",
     image: "/Floral & Gold Heart Charm.png",
     description: "Delicate floral and gold heart charm",
   },
@@ -51,7 +46,6 @@ const PRODUCTS = [
     id: 6,
     name: "Personalized Name Keychain",
     category: "Accessories",
-    price: "$14.99",
     image: "/Personalized Name Keychain.png",
     description: "Custom name keychain with elegant design",
   },
@@ -59,7 +53,6 @@ const PRODUCTS = [
     id: 7,
     name: "Personalized Name Keychain (Style 2)",
     category: "Accessories",
-    price: "$14.99",
     image: "/Personalized Name Keychain (2).png",
     description: "Personalized keychain with unique style",
   },
@@ -67,7 +60,6 @@ const PRODUCTS = [
     id: 8,
     name: "Personalized Name Keychain (Style 3)",
     category: "Accessories",
-    price: "$14.99",
     image: "/Personalized Name Keychain (3).png",
     description: "Custom name keychain with modern design",
   },
@@ -75,7 +67,6 @@ const PRODUCTS = [
     id: 9,
     name: "Personalized Name Keychain (Style 4)",
     category: "Accessories",
-    price: "$14.99",
     image: "/Personalized Name Keychain (4).png",
     description: "Elegant personalized name keychain",
   },
@@ -83,7 +74,6 @@ const PRODUCTS = [
     id: 10,
     name: "Personalized Name Keychain (Style 5)",
     category: "Accessories",
-    price: "$14.99",
     image: "/Personalized Name Keychain (5).png",
     description: "Stylish custom name keychain",
   },
@@ -91,7 +81,6 @@ const PRODUCTS = [
     id: 11,
     name: "Multi-Charm Name Set",
     category: "Accessories",
-    price: "$34.99",
     image: "/Multi-Charm Name Set.png",
     description: "Beautiful multi-charm personalized name set",
   },
@@ -99,7 +88,6 @@ const PRODUCTS = [
     id: 12,
     name: "Multi-Charm Name Set (Deluxe)",
     category: "Accessories",
-    price: "$39.99",
     image: "/Multi-Charm Name Set (2).png",
     description: "Deluxe multi-charm name set with premium finish",
   },
@@ -113,13 +101,16 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState("")
 
   const filteredProducts = useMemo(() => {
-    return PRODUCTS.filter((product) => {
+    const filtered = PRODUCTS.filter((product) => {
       const matchesCategory = selectedCategory === "All" || product.category === selectedCategory
       const matchesSearch =
-        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchQuery.toLowerCase())
+        (product.name?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
+        (product.description?.toLowerCase() || "").includes(searchQuery.toLowerCase())
       return matchesCategory && matchesSearch
     })
+    console.log('Selected Category:', selectedCategory)
+    console.log('Filtered Products:', filtered.length, filtered.map(p => p.name))
+    return filtered
   }, [selectedCategory, searchQuery])
 
   return (

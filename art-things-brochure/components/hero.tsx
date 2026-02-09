@@ -5,6 +5,11 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 
 export default function Hero() {
+  const scrollToCollection = () => {
+    const collectionSection = document.querySelector('section[class*="py-24"]')
+    collectionSection?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
     <section className="min-h-[600px] md:min-h-screen flex items-center justify-center px-6 py-20 bg-background">
       <div className="max-w-7xl w-full grid md:grid-cols-2 gap-12 items-center">
@@ -25,7 +30,7 @@ export default function Hero() {
             </p>
           </div>
           <div className="flex gap-4">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+            <Button onClick={scrollToCollection} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
               Explore Now
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
