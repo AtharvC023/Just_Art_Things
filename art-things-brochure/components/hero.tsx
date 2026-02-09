@@ -52,7 +52,7 @@ export default function Hero() {
             transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
             className="absolute inset-6 bg-card rounded-2xl shadow-lg flex items-center justify-center overflow-hidden border border-border"
           >
-            <img src="/1000405724.jpg" alt="Product showcase" className="w-full h-full object-cover" />
+            <img src="/custom-portrait-frame.jpeg" alt="Product showcase" className="w-full h-full object-cover" />
           </motion.div>
         </motion.div>
       </div>
