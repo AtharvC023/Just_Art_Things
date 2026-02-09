@@ -129,7 +129,7 @@ export default function ProductGrid({
                       onClick={() => onProductSelect(product)}
                       className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
                     >
-                      View Details
+                      Enquire
                     </Button>
                   </div>
                 </Card>
