@@ -137,7 +137,7 @@ const PRODUCTS = [
   },
 ]
 
-const CATEGORIES = ["All", "Frames", "Decor", "Accessories"]
+const CATEGORIES = ["All", "Frames", "Decor", "Accessories", "Little Treasures"]
 
 export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState(null)
