@@ -23,7 +23,7 @@ interface ProductCarouselProps {
 }
 
 export default function ProductCarousel({ products }: ProductCarouselProps) {
-  const featuredProducts = products.slice(0, 6)
+  const featuredProducts = products.slice(0, 9)
 
   return (
     <section className="py-20 px-6 bg-gradient-to-r from-teal-100/30 via-cyan-100/30 to-blue-100/30 dark:from-teal-950/10 dark:via-cyan-950/10 dark:to-blue-950/10">
