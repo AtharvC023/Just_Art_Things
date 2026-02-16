@@ -114,7 +114,7 @@ export default function Home() {
   }, [selectedCategory, searchQuery])
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-teal-50 to-blue-50 dark:from-slate-900 dark:via-cyan-950/30 dark:to-slate-800">
       <Header />
       <Hero />
       <ProductGrid

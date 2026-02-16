@@ -1,12 +1,11 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Geist, Geist_Mono, Lora } from "next/font/google"
+import { Inter, Lora } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
-const _lora = Lora({ subsets: ["latin"], variable: "--font-serif" })
+const inter = Inter({ subsets: ["latin"] })
+const lora = Lora({ subsets: ["latin"], variable: "--font-serif" })
 
 export const metadata: Metadata = {
   title: "Art Things - Premium Art Supply Curator",
@@ -39,7 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans antialiased ${_lora.variable}`}>
+      <body className={`${inter.className} antialiased ${lora.variable}`}>
         {children}
         <Analytics />
       </body>
