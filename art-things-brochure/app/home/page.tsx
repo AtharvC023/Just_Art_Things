@@ -6,6 +6,7 @@ import Hero from "@/components/hero"
 import ProductCarousel from "@/components/product-carousel"
 import ProductGrid from "@/components/product-grid"
 import ProductDetail from "@/components/product-detail"
+import Footer from "@/components/footer"
 
 const PRODUCTS = [
   {
@@ -128,7 +129,15 @@ export default function Home() {
         onSearchChange={setSearchQuery}
         onProductSelect={setSelectedProduct}
       />
-      {selectedProduct && <ProductDetail product={selectedProduct} onClose={() => setSelectedProduct(null)} />}
+      {selectedProduct && (
+        <ProductDetail 
+          product={selectedProduct} 
+          onClose={() => setSelectedProduct(null)}
+          allProducts={PRODUCTS}
+          onProductSelect={setSelectedProduct}
+        />
+      )}
+      <Footer />
     </div>
   )
 }

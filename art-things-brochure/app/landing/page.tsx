@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Star, Users, Award, Sparkles } from "lucide-react"
 import Link from "next/link"
+import Footer from "@/components/footer"
 
 export default function LandingPage() {
   return (
@@ -165,6 +166,7 @@ export default function LandingPage() {
           </Link>
         </motion.div>
       </section>
+      <Footer />
     </div>
   )
 }

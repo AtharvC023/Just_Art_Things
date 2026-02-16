@@ -2,13 +2,18 @@
 
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import { MessageCircle, Instagram, X } from "lucide-react"
 
 const WHATSAPP_NUMBER = "918830968893"
 const INSTAGRAM_USERNAME = "justartistthings"
 
-export default function ProductDetail({ product, onClose }) {
+export default function ProductDetail({ product, onClose, allProducts, onProductSelect }) {
   if (!product) return null
+
+  const relatedProducts = allProducts
+    ?.filter(p => p.category === product.category && p.id !== product.id)
+    .slice(0, 3) || []
 
   const handleWhatsAppInquiry = () => {
     const message = encodeURIComponent(`Hi! I'm interested in: ${product.name}\n\nCould you provide more details?`)
@@ -84,6 +89,33 @@ export default function ProductDetail({ product, onClose }) {
                 </Button>
               </div>
             </div>
+
+            {/* Related Products */}
+            {relatedProducts.length > 0 && (
+              <div className="border-t pt-6 mt-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">You Might Also Like</h3>
+                <div className="grid grid-cols-3 gap-3">
+                  {relatedProducts.map((relatedProduct) => (
+                    <Card 
+                      key={relatedProduct.id}
+                      className="cursor-pointer hover:shadow-lg transition-all overflow-hidden group"
+                      onClick={() => onProductSelect(relatedProduct)}
+                    >
+                      <div className="aspect-square relative bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-slate-700 dark:to-slate-600">
+                        <img
+                          src={relatedProduct.image}
+                          alt={relatedProduct.name}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                      </div>
+                      <div className="p-2">
+                        <p className="text-xs font-medium text-gray-900 truncate">{relatedProduct.name}</p>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </motion.div>
       </motion.div>

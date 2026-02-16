@@ -1,158 +1,91 @@
 "use client"
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Instagram, Facebook, Twitter, Mail } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from "lucide-react"
+import Link from "next/link"
 
 export default function Footer() {
-  const [email, setEmail] = useState("")
-  const [isSubscribed, setIsSubscribed] = useState(false)
-
-  const handleSubscribe = (e) => {
-    e.preventDefault()
-    setIsSubscribed(true)
-    setEmail("")
-    setTimeout(() => setIsSubscribed(false), 3000)
-  }
-
-  const socials = [
-    { icon: Instagram, label: "Instagram", href: "#" },
-    { icon: Facebook, label: "Facebook", href: "#" },
-    { icon: Twitter, label: "Twitter", href: "#" },
-    { icon: Mail, label: "Email", href: "#" },
-  ]
-
   return (
-    <footer className="bg-primary text-primary-foreground pt-20 pb-10">
-      <div className="max-w-7xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="mb-16 pb-16 border-b border-primary-foreground/20"
-        >
-          <div className="max-w-md">
-            <h3 className="text-2xl font-serif font-bold mb-2">Stay Updated</h3>
-            <p className="text-primary-foreground/80 mb-6">
-              Subscribe to receive our latest products and exclusive offers.
+    <footer className="bg-gradient-to-br from-slate-900 via-teal-900 to-slate-900 text-white">
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+          {/* About */}
+          <div>
+            <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
+              Just Artist Things
+            </h3>
+            <p className="text-slate-300 mb-4">
+              Your premier destination for handcrafted art supplies and custom creations.
             </p>
-            <form onSubmit={handleSubscribe} className="flex gap-2">
-              <Input
-                type="email"
-                placeholder="your@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/50"
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+            <ul className="space-y-2">
+              <li><Link href="/home" className="text-slate-300 hover:text-teal-400 transition-colors">Shop</Link></li>
+              <li><Link href="/landing" className="text-slate-300 hover:text-teal-400 transition-colors">About Us</Link></li>
+              <li><Link href="#" className="text-slate-300 hover:text-teal-400 transition-colors">Contact</Link></li>
+              <li><Link href="#" className="text-slate-300 hover:text-teal-400 transition-colors">FAQ</Link></li>
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="text-lg font-semibold mb-4">Contact Us</h4>
+            <ul className="space-y-3">
+              <li className="flex items-center gap-2 text-slate-300">
+                <Mail className="h-4 w-4 text-teal-400" />
+                <span>info@justartistthings.com</span>
+              </li>
+              <li className="flex items-center gap-2 text-slate-300">
+                <Phone className="h-4 w-4 text-teal-400" />
+                <span>+1 (555) 123-4567</span>
+              </li>
+              <li className="flex items-center gap-2 text-slate-300">
+                <MapPin className="h-4 w-4 text-teal-400" />
+                <span>123 Art Street, Creative City</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Newsletter */}
+          <div>
+            <h4 className="text-lg font-semibold mb-4">Newsletter</h4>
+            <p className="text-slate-300 mb-4 text-sm">
+              Subscribe for exclusive offers and updates
+            </p>
+            <div className="flex gap-2">
+              <Input 
+                type="email" 
+                placeholder="Your email" 
+                className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-400"
               />
-              <Button type="submit" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
+              <Button className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600">
                 Subscribe
               </Button>
-            </form>
-            {isSubscribed && (
-              <motion.p
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-green-300 text-sm mt-2"
-              >
-                ✓ Thank you for subscribing!
-              </motion.p>
-            )}
-          </div>
-        </motion.div>
-
-        <div className="grid md:grid-cols-4 gap-12 mb-12">
-          <div>
-            <h4 className="font-serif font-bold mb-4">About</h4>
-            <p className="text-primary-foreground/80 text-sm leading-relaxed">
-              We offer a curated selection of premium products for discerning customers.
-            </p>
-          </div>
-          <div>
-            <h4 className="font-serif font-bold mb-4">Shop</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition">
-                  All Products
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition">
-                  New Arrivals
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition">
-                  Sale
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-serif font-bold mb-4">Support</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition">
-                  Contact Us
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition">
-                  Shipping Info
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition">
-                  Returns
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-serif font-bold mb-4">Connect</h4>
-            <div className="flex gap-4">
-              {socials.map((social) => {
-                const Icon = social.icon
-                return (
-                  <motion.a
-                    key={social.label}
-                    href={social.href}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="text-primary-foreground/80 hover:text-primary-foreground transition"
-                    aria-label={social.label}
-                  >
-                    <Icon size={20} />
-                  </motion.a>
-                )
-              })}
             </div>
           </div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="pt-8 border-t border-primary-foreground/20 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-primary-foreground/80"
-        >
-          <p>&copy; 2025 Your Brand. All rights reserved.</p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-primary-foreground transition">
-              Privacy
-            </a>
-            <a href="#" className="hover:text-primary-foreground transition">
-              Terms
-            </a>
-            <a href="#" className="hover:text-primary-foreground transition">
-              Cookies
-            </a>
+        {/* Social Media & Copyright */}
+        <div className="border-t border-slate-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-slate-400 text-sm">
+            © 2024 Just Artist Things. All rights reserved.
+          </p>
+          <div className="flex gap-4">
+            <Link href="#" className="bg-slate-800 p-2 rounded-full hover:bg-teal-600 transition-colors">
+              <Facebook className="h-5 w-5" />
+            </Link>
+            <Link href="#" className="bg-slate-800 p-2 rounded-full hover:bg-teal-600 transition-colors">
+              <Instagram className="h-5 w-5" />
+            </Link>
+            <Link href="#" className="bg-slate-800 p-2 rounded-full hover:bg-teal-600 transition-colors">
+              <Twitter className="h-5 w-5" />
+            </Link>
           </div>
-        </motion.div>
+        </div>
       </div>
     </footer>
   )
