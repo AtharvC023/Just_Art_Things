@@ -10,7 +10,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-teal-50 to-blue-50 dark:from-slate-900 dark:via-cyan-950/30 dark:to-slate-800">
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center px-6 py-20">
+      <section id="home" className="min-h-screen flex items-center justify-center px-6 py-20">
         <div className="max-w-6xl w-full text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -87,7 +87,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-6">
+      <section id="about" className="py-20 px-6">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -144,7 +144,7 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-6 bg-gradient-to-r from-cyan-100/50 via-teal-100/50 to-blue-100/50 dark:from-cyan-950/20 dark:via-teal-950/20 dark:to-blue-950/20">
+      <section id="contact" className="py-20 px-6 bg-gradient-to-r from-cyan-100/50 via-teal-100/50 to-blue-100/50 dark:from-cyan-950/20 dark:via-teal-950/20 dark:to-blue-950/20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -153,17 +153,22 @@ export default function LandingPage() {
           className="max-w-4xl mx-auto text-center"
         >
           <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-            Ready to Transform Your Space?
+            Get in Touch
           </h2>
           <p className="text-xl text-slate-600 dark:text-slate-300 mb-8">
-            Join thousands of satisfied customers who have elevated their homes with our collection
+            Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
           </p>
-          <Link href="/home">
-            <Button size="lg" className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all">
-              Start Shopping Now
-              <ArrowRight className="ml-2 h-5 w-5" />
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/home">
+              <Button size="lg" className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all">
+                Browse Products
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+            <Button size="lg" variant="outline" className="px-8 py-4 text-lg border-2 border-teal-500 text-teal-600 hover:bg-teal-50 dark:border-teal-400 dark:text-teal-400 dark:hover:bg-teal-950/20">
+              Contact Us
             </Button>
-          </Link>
+          </div>
         </motion.div>
       </section>
       <Footer />

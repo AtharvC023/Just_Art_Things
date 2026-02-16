@@ -24,7 +24,20 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const navItems = ["Home", "About", "Contact"]
+  const navItems = [
+    { name: "Home", href: "#home" },
+    { name: "About", href: "#about" },
+    { name: "Contact", href: "#contact" }
+  ]
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    const element = document.querySelector(href)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      setMobileMenuOpen(false)
+    }
+  }
 
   return (
     <motion.header
@@ -44,11 +57,12 @@ export default function Header() {
         <div className="hidden md:flex items-center gap-12">
           {navItems.map((item) => (
             <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              className="text-sm font-medium text-foreground hover:text-foreground/60 transition-colors"
+              key={item.name}
+              href={item.href}
+              onClick={(e) => handleNavClick(e, item.href)}
+              className="text-sm font-medium text-foreground hover:text-foreground/60 transition-colors cursor-pointer"
             >
-              {item}
+              {item.name}
             </a>
           ))}
         </div>
@@ -79,12 +93,12 @@ export default function Header() {
           <div className="px-6 py-4 flex flex-col gap-4">
             {navItems.map((item) => (
               <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="text-sm font-medium text-foreground"
-                onClick={() => setMobileMenuOpen(false)}
+                key={item.name}
+                href={item.href}
+                onClick={(e) => handleNavClick(e, item.href)}
+                className="text-sm font-medium text-foreground cursor-pointer"
               >
-                {item}
+                {item.name}
               </a>
             ))}
           </div>
