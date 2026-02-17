@@ -128,9 +128,16 @@ const PRODUCTS = [
     image: "/Custom Portrait Frame (3).jpeg",
     description: "Artistic designer frame for your precious memories",
   },
+  {
+    id: 18,
+    name: "Baby Shower Celebration Set",
+    category: "Special Occasion",
+    image: "/Baby Shower Decor.png",
+    description: "Beautiful handcrafted baby shower decoration set",
+  },
 ]
 
-const CATEGORIES = ["All", "Frames", "Decor", "Accessories", "Little Treasures"]
+const CATEGORIES = ["All", "Frames", "Decor", "Accessories", "Special Occasion", "Little Treasures"]
 
 export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState(null)
