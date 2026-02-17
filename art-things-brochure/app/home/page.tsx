@@ -132,7 +132,7 @@ const PRODUCTS = [
     id: 18,
     name: "Baby Shower Celebration Set",
     category: "Special Occasion",
-    image: "/Baby Shower Decor.png",
+    image: "/Baby Shower Decor.gif",
     description: "Beautiful handcrafted baby shower decoration set",
   },
 ]
