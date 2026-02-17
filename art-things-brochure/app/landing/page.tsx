@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Star, Users, Award, Sparkles } from "lucide-react"
+import { ArrowRight, Star, Users, Award, Sparkles, Heart, Shield, Leaf, Quote } from "lucide-react"
 import Link from "next/link"
 import Footer from "@/components/footer"
 
@@ -81,6 +81,217 @@ export default function LandingPage() {
                 <span className="text-3xl font-bold text-slate-900 dark:text-slate-100">4.9</span>
               </div>
               <p className="text-slate-600 dark:text-slate-400">Customer Rating</p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* About the Artist Section */}
+      <section className="py-20 px-6 bg-white dark:bg-slate-800">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="grid md:grid-cols-2 gap-12 items-center"
+          >
+            <div>
+              <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-6">
+                About the Artist
+              </h2>
+              <p className="text-lg text-slate-600 dark:text-slate-300 mb-4">
+                Every piece at Just Artist Things is crafted with passion and precision. Our journey began with a simple belief: that art should be personal, meaningful, and made to last.
+              </p>
+              <p className="text-lg text-slate-600 dark:text-slate-300 mb-6">
+                With years of experience in handcrafted art and design, we pour our heart into every creation, ensuring each piece tells its own unique story.
+              </p>
+              <div className="flex items-center gap-4">
+                <Heart className="h-8 w-8 text-primary" />
+                <div>
+                  <p className="font-semibold text-slate-900 dark:text-slate-100">Made with Love</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Every detail matters</p>
+                </div>
+              </div>
+            </div>
+            <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-teal-400 to-cyan-600 opacity-20"></div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Sparkles className="h-32 w-32 text-teal-600 dark:text-teal-400" />
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">
+              What Our Customers Say
+            </h2>
+          </motion.div>
+
+          <motion.div
+            className="grid md:grid-cols-3 gap-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.15 }
+              }
+            }}
+          >
+            {[
+              {
+                name: "Sarah M.",
+                text: "The quality is exceptional! Each piece feels personal and made with care. Absolutely love my custom frame.",
+                rating: 5
+              },
+              {
+                name: "James K.",
+                text: "Beautiful craftsmanship and attention to detail. The resin art pieces are stunning and unique.",
+                rating: 5
+              },
+              {
+                name: "Emily R.",
+                text: "Fast shipping and gorgeous products. The personalized keychain was perfect for my gift!",
+                rating: 5
+              }
+            ].map((testimonial, index) => (
+              <motion.div
+                key={index}
+                variants={{
+                  hidden: { opacity: 0, y: 30 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+                }}
+                className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg relative"
+              >
+                <Quote className="h-8 w-8 text-primary/20 absolute top-4 right-4" />
+                <div className="flex gap-1 mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="text-slate-600 dark:text-slate-300 mb-4 italic">
+                  "{testimonial.text}"
+                </p>
+                <p className="font-semibold text-slate-900 dark:text-slate-100">
+                  {testimonial.name}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Why Handmade Section */}
+      <section className="py-20 px-6 bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-slate-800 dark:to-slate-900">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">
+              Why Handmade Matters
+            </h2>
+            <p className="text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+              Every handcrafted piece carries the soul of its creator
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="grid md:grid-cols-3 gap-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.15 }
+              }
+            }}
+          >
+            {[
+              {
+                icon: <Heart className="h-12 w-12 text-primary" />,
+                title: "Made with Care",
+                description: "Each piece is individually crafted with attention to every detail, ensuring uniqueness and quality."
+              },
+              {
+                icon: <Shield className="h-12 w-12 text-primary" />,
+                title: "Premium Materials",
+                description: "We use only the finest materials - from sustainable wood to high-quality resin and metals."
+              },
+              {
+                icon: <Leaf className="h-12 w-12 text-primary" />,
+                title: "Eco-Friendly",
+                description: "Sustainable practices and eco-conscious materials for a better tomorrow."
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                variants={{
+                  hidden: { opacity: 0, scale: 0.9 },
+                  visible: { opacity: 1, scale: 1, transition: { duration: 0.6 } }
+                }}
+                className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg text-center"
+              >
+                <div className="flex justify-center mb-4">{item.icon}</div>
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-3">
+                  {item.title}
+                </h3>
+                <p className="text-slate-600 dark:text-slate-300">
+                  {item.description}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Care Instructions */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            viewport={{ once: true }}
+            className="mt-12 bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg"
+          >
+            <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4 text-center">
+              Materials & Care
+            </h3>
+            <div className="grid md:grid-cols-2 gap-6 text-slate-600 dark:text-slate-300">
+              <div>
+                <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-2">Materials Used:</h4>
+                <ul className="space-y-1 list-disc list-inside">
+                  <li>Premium quality resin</li>
+                  <li>Sustainable wood</li>
+                  <li>Hypoallergenic metals</li>
+                  <li>Eco-friendly finishes</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-2">Care Instructions:</h4>
+                <ul className="space-y-1 list-disc list-inside">
+                  <li>Clean with soft, dry cloth</li>
+                  <li>Avoid direct sunlight</li>
+                  <li>Keep away from moisture</li>
+                  <li>Handle with care</li>
+                </ul>
+              </div>
             </div>
           </motion.div>
         </div>

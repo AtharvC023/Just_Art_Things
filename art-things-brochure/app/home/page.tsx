@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import Header from "@/components/header"
 import Hero from "@/components/hero"
 import ProductCarousel from "@/components/product-carousel"
@@ -143,6 +143,13 @@ export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [searchQuery, setSearchQuery] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+
+  // Filter categories to hide "Little Treasures" if no products
+  const availableCategories = useMemo(() => {
+    const hasLittleTreasures = PRODUCTS.some(p => p.category === "Little Treasures")
+    return hasLittleTreasures ? CATEGORIES : CATEGORIES.filter(c => c !== "Little Treasures")
+  }, [])
 
   const filteredProducts = useMemo(() => {
     const filtered = PRODUCTS.filter((product) => {
@@ -152,9 +159,14 @@ export default function Home() {
         (product.description?.toLowerCase() || "").includes(searchQuery.toLowerCase())
       return matchesCategory && matchesSearch
     })
-    console.log('Selected Category:', selectedCategory)
-    console.log('Filtered Products:', filtered.length, filtered.map(p => p.name))
     return filtered
+  }, [selectedCategory, searchQuery])
+
+  // Simulate loading when filters change
+  useEffect(() => {
+    setIsLoading(true)
+    const timer = setTimeout(() => setIsLoading(false), 300)
+    return () => clearTimeout(timer)
   }, [selectedCategory, searchQuery])
 
   return (
@@ -164,12 +176,13 @@ export default function Home() {
       <ProductCarousel products={PRODUCTS} />
       <ProductGrid
         products={filteredProducts}
-        categories={CATEGORIES}
+        categories={availableCategories}
         selectedCategory={selectedCategory}
         onCategoryChange={setSelectedCategory}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onProductSelect={setSelectedProduct}
+        isLoading={isLoading}
       />
       {selectedProduct && (
         <ProductDetail 

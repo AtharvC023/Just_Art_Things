@@ -4,7 +4,8 @@ import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Search } from "lucide-react"
+import { Search, Package } from "lucide-react"
+import { ProductCardSkeleton } from "@/components/loading-skeleton"
 
 export default function ProductGrid({
   products,
@@ -14,6 +15,7 @@ export default function ProductGrid({
   searchQuery,
   onSearchChange,
   onProductSelect,
+  isLoading = false,
 }) {
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -97,7 +99,13 @@ export default function ProductGrid({
         </motion.div>
 
         {/* Products Grid */}
-        {products.length > 0 ? (
+        {isLoading ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <ProductCardSkeleton key={i} />
+            ))}
+          </div>
+        ) : products.length > 0 ? (
           <motion.div
             key={selectedCategory}
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
@@ -137,8 +145,35 @@ export default function ProductGrid({
             ))}
           </motion.div>
         ) : (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center py-16">
-            <p className="text-foreground/60 text-lg">No products found. Try adjusting your filters.</p>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            className="text-center py-20"
+          >
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center">
+                <Package className="w-10 h-10 text-muted-foreground" />
+              </div>
+              <h3 className="text-2xl font-semibold text-foreground">No products found</h3>
+              <p className="text-foreground/60 text-lg max-w-md">
+                {searchQuery 
+                  ? `No results for "${searchQuery}". Try a different search term.`
+                  : `No products in ${selectedCategory} category yet.`
+                }
+              </p>
+              {(searchQuery || selectedCategory !== "All") && (
+                <Button
+                  onClick={() => {
+                    onSearchChange("")
+                    onCategoryChange("All")
+                  }}
+                  variant="outline"
+                  className="mt-4"
+                >
+                  Clear Filters
+                </Button>
+              )}
+            </div>
           </motion.div>
         )}
       </div>
