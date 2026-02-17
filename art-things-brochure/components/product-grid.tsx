@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Search, Package } from "lucide-react"
 import { ProductCardSkeleton } from "@/components/loading-skeleton"
+import { useState } from "react"
 
 export default function ProductGrid({
   products,
@@ -113,20 +114,39 @@ export default function ProductGrid({
             initial="hidden"
             animate="visible"
           >
-            {products.map((product) => (
+            {products.map((product) => {
+              const isGif = product.image?.endsWith('.gif')
+              const staticImage = isGif ? product.image.replace('.gif', '.png') : product.image
+              
+              return (
               <motion.div
                 key={product.id}
                 variants={itemVariants}
                 whileHover={{ y: -8 }}
                 transition={{ duration: 0.3 }}
               >
-                <Card className="overflow-hidden bg-card border-0 shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
+                <Card className="overflow-hidden bg-card border-0 shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col group">
                   <div className="relative overflow-hidden bg-white aspect-[5/4]">
-                    <img
-                      src={product.image || "/placeholder.svg?height=256&width=400&query=product"}
-                      alt={product.name}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                    />
+                    {isGif ? (
+                      <>
+                        <img
+                          src={staticImage}
+                          alt={product.name}
+                          className="w-full h-full object-cover group-hover:opacity-0 transition-opacity duration-300"
+                        />
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        />
+                      </>
+                    ) : (
+                      <img
+                        src={product.image || "/placeholder.svg?height=256&width=400&query=product"}
+                        alt={product.name}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      />
+                    )}
                   </div>
 
                   <div className="p-6 flex flex-col flex-grow">
@@ -142,7 +162,7 @@ export default function ProductGrid({
                   </div>
                 </Card>
               </motion.div>
-            ))}
+            )})}
           </motion.div>
         ) : (
           <motion.div 
