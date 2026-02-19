@@ -1,18 +1,14 @@
-import { Metadata } from 'next'
+'use client'
 
-export const metadata: Metadata = {
-  title: "Art Things - Premium Art Supply Curator",
-}
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function RootPage() {
-  return (
-    <html>
-      <head>
-        <meta httpEquiv="refresh" content="0;url=/landing" />
-      </head>
-      <body>
-        <script dangerouslySetInnerHTML={{ __html: `window.location.href='/landing'` }} />
-      </body>
-    </html>
-  )
+  const router = useRouter()
+  
+  useEffect(() => {
+    router.push('/landing')
+  }, [router])
+  
+  return null
 }
