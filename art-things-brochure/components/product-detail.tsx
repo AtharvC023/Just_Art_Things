@@ -9,7 +9,22 @@ import { useEffect } from "react"
 const WHATSAPP_NUMBER = "919370015472"
 const INSTAGRAM_URL = "https://www.instagram.com/just__artist.things?igsh=MTVoa3FiM2I0YXBhZQ=="
 
-export default function ProductDetail({ product, onClose, allProducts, onProductSelect }) {
+interface Product {
+  id: number
+  name: string
+  category: string
+  image: string
+  description: string
+}
+
+interface ProductDetailProps {
+  product: Product | null
+  onClose: () => void
+  allProducts: Product[]
+  onProductSelect: (product: Product) => void
+}
+
+export default function ProductDetail({ product, onClose, allProducts, onProductSelect }: ProductDetailProps) {
   if (!product) return null
 
   const relatedProducts = allProducts

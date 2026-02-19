@@ -6,7 +6,25 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Search, Package } from "lucide-react"
 import { ProductCardSkeleton } from "@/components/loading-skeleton"
-import { useState } from "react"
+
+interface Product {
+  id: number
+  name: string
+  category: string
+  image: string
+  description: string
+}
+
+interface ProductGridProps {
+  products: Product[]
+  categories: string[]
+  selectedCategory: string
+  onCategoryChange: (category: string) => void
+  searchQuery: string
+  onSearchChange: (query: string) => void
+  onProductSelect: (product: Product) => void
+  isLoading?: boolean
+}
 
 export default function ProductGrid({
   products,
@@ -17,7 +35,7 @@ export default function ProductGrid({
   onSearchChange,
   onProductSelect,
   isLoading = false,
-}) {
+}: ProductGridProps) {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
