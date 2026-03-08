@@ -4,8 +4,10 @@ import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Search, Package } from "lucide-react"
+import { Search, Package, Heart } from "lucide-react"
 import { ProductCardSkeleton } from "@/components/loading-skeleton"
+import { useFavorites } from "@/contexts/FavoritesContext"
+import { useAuth } from "@/contexts/AuthContext"
 
 interface Product {
   id: string
@@ -36,6 +38,21 @@ export default function ProductGrid({
   onProductSelect,
   isLoading = false,
 }: ProductGridProps) {
+  const { isFavorite, addToFavorites, removeFromFavorites } = useFavorites()
+  const { user } = useAuth()
+
+  const handleFavoriteClick = async (e: React.MouseEvent, productId: string) => {
+    e.stopPropagation()
+    if (!user) {
+      alert('Please sign in to add favorites')
+      return
+    }
+    if (isFavorite(productId)) {
+      await removeFromFavorites(productId)
+    } else {
+      await addToFavorites(productId)
+    }
+  }
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -145,6 +162,15 @@ export default function ProductGrid({
               >
                 <Card className="overflow-hidden bg-card border-0 shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col group">
                   <div className="relative overflow-hidden bg-white aspect-[5/4]">
+                    <button
+                      onClick={(e) => handleFavoriteClick(e, product.id)}
+                      className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/90 hover:bg-white shadow-md transition-all"
+                    >
+                      <Heart 
+                        size={20} 
+                        className={isFavorite(product.id) ? "fill-red-500 text-red-500" : "text-gray-600"} 
+                      />
+                    </button>
                     {isGif ? (
                       <>
                         <img

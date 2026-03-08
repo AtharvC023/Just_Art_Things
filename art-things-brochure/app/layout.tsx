@@ -4,6 +4,7 @@ import { Inter, Lora } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AuthProvider } from "@/contexts/AuthContext"
+import { FavoritesProvider } from "@/contexts/FavoritesContext"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -35,8 +36,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
-            {children}
-            <Analytics />
+            <FavoritesProvider>
+              {children}
+              <Analytics />
+            </FavoritesProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>
