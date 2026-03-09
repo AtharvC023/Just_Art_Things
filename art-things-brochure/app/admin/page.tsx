@@ -79,6 +79,9 @@ export default function AdminPage() {
       featured: product.featured || false,
     })
     setShowForm(true)
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }, 100)
   }
 
   const handleDelete = async (id: string) => {
