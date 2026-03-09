@@ -26,7 +26,7 @@ export default function AdminPage() {
     featured: false,
   })
 
-  const isAdmin = user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL
+  const isAdmin = user?.email && process.env.NEXT_PUBLIC_ADMIN_EMAIL?.split(',').map(e => e.trim()).includes(user.email)
 
   useEffect(() => {
     if (!user) {
