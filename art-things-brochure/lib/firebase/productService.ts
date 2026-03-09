@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, getDoc, query, where } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, query, where, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from './config';
 
 export interface Product {
@@ -29,5 +29,18 @@ export const productService = {
     const q = query(productsRef, where('category', '==', category));
     const snapshot = await getDocs(q);
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
+  },
+
+  async addProduct(product: Omit<Product, 'id'>): Promise<string> {
+    const docRef = await addDoc(collection(db, PRODUCTS_COLLECTION), product);
+    return docRef.id;
+  },
+
+  async updateProduct(id: string, product: Partial<Omit<Product, 'id'>>): Promise<void> {
+    await updateDoc(doc(db, PRODUCTS_COLLECTION, id), product);
+  },
+
+  async deleteProduct(id: string): Promise<void> {
+    await deleteDoc(doc(db, PRODUCTS_COLLECTION, id));
   },
 };

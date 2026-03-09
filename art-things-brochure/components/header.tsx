@@ -39,6 +39,8 @@ export default function Header() {
     { name: "Contact", href: "#contact" }
   ]
 
+  const isAdmin = user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault()
     const element = document.querySelector(href)
@@ -74,6 +76,14 @@ export default function Header() {
               {item.name}
             </a>
           ))}
+          {isAdmin && (
+            <button
+              onClick={() => router.push('/admin')}
+              className="text-sm font-medium text-foreground hover:text-foreground/60 transition-colors cursor-pointer"
+            >
+              Admin
+            </button>
+          )}
         </div>
 
         <div className="flex items-center gap-4">
