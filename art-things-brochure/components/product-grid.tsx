@@ -4,10 +4,11 @@ import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Search, Package, Heart } from "lucide-react"
+import { Search, Package, Heart, ShoppingCart } from "lucide-react"
 import { ProductCardSkeleton } from "@/components/loading-skeleton"
 import { useFavorites } from "@/contexts/FavoritesContext"
 import { useAuth } from "@/contexts/AuthContext"
+import { useCart } from "@/contexts/CartContext"
 
 interface Product {
   id: string
@@ -15,6 +16,7 @@ interface Product {
   category: string
   image: string
   description: string
+  price?: number
 }
 
 interface ProductGridProps {
@@ -40,6 +42,22 @@ export default function ProductGrid({
 }: ProductGridProps) {
   const { isFavorite, addToFavorites, removeFromFavorites } = useFavorites()
   const { user } = useAuth()
+  const { addToCart } = useCart()
+
+  const handleAddToCart = async (e: React.MouseEvent, product: Product) => {
+    e.stopPropagation()
+    if (!user) {
+      alert('Please sign in to add items to cart')
+      return
+    }
+    await addToCart(
+      product.id,
+      product.name,
+      product.image,
+      product.price || 0,
+      product.category
+    )
+  }
 
   const handleFavoriteClick = async (e: React.MouseEvent, productId: string) => {
     e.stopPropagation()
@@ -197,12 +215,22 @@ export default function ProductGrid({
                     <p className="text-xs text-muted-foreground uppercase tracking-widest mb-2">{product.category}</p>
                     <h3 className="text-lg font-serif font-bold mb-2 text-foreground">{product.name}</h3>
                     <p className="text-foreground/70 text-sm mb-4 flex-grow">{product.description}</p>
-                    <Button
-                      onClick={() => onProductSelect(product)}
-                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
-                    >
-                      Enquire
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={(e) => handleAddToCart(e, product)}
+                        className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
+                      >
+                        <ShoppingCart size={16} className="mr-2" />
+                        Add to Cart
+                      </Button>
+                      <Button
+                        onClick={() => onProductSelect(product)}
+                        variant="outline"
+                        className="flex-1"
+                      >
+                        Details
+                      </Button>
+                    </div>
                   </div>
                 </Card>
               </motion.div>

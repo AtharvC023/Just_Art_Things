@@ -5,6 +5,8 @@ import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AuthProvider } from "@/contexts/AuthContext"
 import { FavoritesProvider } from "@/contexts/FavoritesContext"
+import { CartProvider } from "@/contexts/CartContext"
+import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -37,8 +39,11 @@ export default function RootLayout({
         >
           <AuthProvider>
             <FavoritesProvider>
-              {children}
-              <Analytics />
+              <CartProvider>
+                {children}
+                <Analytics />
+                <Toaster />
+              </CartProvider>
             </FavoritesProvider>
           </AuthProvider>
         </ThemeProvider>

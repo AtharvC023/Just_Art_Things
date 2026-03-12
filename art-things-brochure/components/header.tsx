@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { Menu, X, Moon, Sun, LogIn, LogOut, User, Heart } from "lucide-react"
+import { Menu, X, Moon, Sun, LogIn, LogOut, User, Heart, ShoppingCart } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { useAuth } from "@/contexts/AuthContext"
 import { useFavorites } from "@/contexts/FavoritesContext"
+import { useCart } from "@/contexts/CartContext"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 
@@ -20,6 +21,7 @@ export default function Header() {
   const [mounted, setMounted] = useState(false)
   const { user, signInWithGoogle, signOut } = useAuth()
   const { favorites } = useFavorites()
+  const { getItemCount } = useCart()
 
   useEffect(() => {
     setMounted(true)
@@ -88,19 +90,34 @@ export default function Header() {
 
         <div className="flex items-center gap-4">
           {user && (
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={() => router.push('/favorites')}
-              className="relative"
-            >
-              <Heart size={20} className={favorites.length > 0 ? "fill-red-500 text-red-500" : ""} />
-              {favorites.length > 0 && (
-                <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs">
-                  {favorites.length}
-                </Badge>
-              )}
-            </Button>
+            <>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={() => router.push('/cart')}
+                className="relative"
+              >
+                <ShoppingCart size={20} />
+                {getItemCount() > 0 && (
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs">
+                    {getItemCount()}
+                  </Badge>
+                )}
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={() => router.push('/favorites')}
+                className="relative"
+              >
+                <Heart size={20} className={favorites.length > 0 ? "fill-red-500 text-red-500" : ""} />
+                {favorites.length > 0 && (
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs">
+                    {favorites.length}
+                  </Badge>
+                )}
+              </Button>
+            </>
           )}
 
           {user ? (
