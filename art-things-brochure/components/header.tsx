@@ -97,20 +97,12 @@ export default function Header() {
             </a>
           ))}
           {user && (
-            <>
-              <button
-                onClick={() => router.push('/favorites')}
-                className="text-sm font-medium text-foreground hover:text-foreground/60 transition-colors cursor-pointer"
-              >
-                Favorites
-              </button>
-              <button
-                onClick={() => router.push('/orders')}
-                className="text-sm font-medium text-foreground hover:text-foreground/60 transition-colors cursor-pointer"
-              >
-                Orders
-              </button>
-            </>
+            <button
+              onClick={() => router.push('/orders')}
+              className="text-sm font-medium text-foreground hover:text-foreground/60 transition-colors cursor-pointer"
+            >
+              Orders
+            </button>
           )}
           {isAdmin && (
             <button
@@ -219,20 +211,12 @@ export default function Header() {
               </a>
             ))}
             {user && (
-              <>
-                <button
-                  onClick={() => router.push('/favorites')}
-                  className="text-sm font-medium text-foreground cursor-pointer text-left"
-                >
-                  Favorites
-                </button>
-                <button
-                  onClick={() => router.push('/orders')}
-                  className="text-sm font-medium text-foreground cursor-pointer text-left"
-                >
-                  Orders
-                </button>
-              </>
+              <button
+                onClick={() => router.push('/orders')}
+                className="text-sm font-medium text-foreground cursor-pointer text-left"
+              >
+                Orders
+              </button>
             )}
             {isAdmin && (
               <button
