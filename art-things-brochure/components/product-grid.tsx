@@ -153,8 +153,8 @@ export default function ProductGrid({
               onClick={() => onCategoryChange(category)}
               variant={selectedCategory === category ? "default" : "outline"}
               className={`px-6 py-2 rounded-full transition-all ${selectedCategory === category
-                  ? "bg-primary text-primary-foreground"
-                  : "border-border text-foreground hover:border-foreground/50"
+                ? "bg-primary text-primary-foreground"
+                : "border-border text-foreground hover:border-foreground/50"
                 }`}
             >
               {category}
@@ -164,7 +164,7 @@ export default function ProductGrid({
 
         {/* Products Grid */}
         {isLoading ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <ProductCardSkeleton key={i} />
             ))}
@@ -172,7 +172,7 @@ export default function ProductGrid({
         ) : products.length > 0 ? (
           <motion.div
             key={selectedCategory}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -230,34 +230,34 @@ export default function ProductGrid({
                       )}
                     </div>
 
-                    <div className="p-6 flex flex-col flex-grow">
-                      <p className="text-xs text-muted-foreground uppercase tracking-widest mb-2">{product.category}</p>
-                      <h3 className="text-lg font-serif font-bold mb-2 text-foreground">{product.name}</h3>
-                      <p className="text-foreground/70 text-sm mb-4 flex-grow">{product.description}</p>
+                    <div className="p-4 flex flex-col flex-grow">
+                      <p className="text-[10px] text-muted-foreground uppercase tracking-widest mb-1">{product.category}</p>
+                      <h3 className="text-base font-serif font-bold mb-1 text-foreground line-clamp-1">{product.name}</h3>
+                      <p className="text-foreground/70 text-xs mb-3 flex-grow line-clamp-2">{product.description}</p>
 
                       {/* Price and Stock Info */}
-                      <div className="mb-4">
+                      <div className="mb-3">
                         {product.price && product.price > 0 && (
-                          <p className="text-xl font-bold text-primary mb-2">₹{product.price.toFixed(2)}</p>
+                          <p className="text-lg font-bold text-primary mb-1">₹{product.price.toFixed(2)}</p>
                         )}
                         {product.stock !== undefined && (
-                          <StockStatus stock={product.stock} variant="detailed" className="mb-2" />
+                          <StockStatus stock={product.stock} variant="detailed" className="mb-1" />
                         )}
                       </div>
 
                       <div className="flex gap-2">
                         <Button
                           onClick={(e) => handleAddToCart(e, product)}
-                          className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
+                          className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground text-xs h-9"
                           disabled={product.stock !== undefined && product.stock <= 0}
                         >
-                          <ShoppingCart size={16} className="mr-2" />
-                          {product.stock !== undefined && product.stock <= 0 ? 'Out of Stock' : 'Add to Cart'}
+                          <ShoppingCart size={14} className="mr-1" />
+                          {product.stock !== undefined && product.stock <= 0 ? 'Out' : 'Add'}
                         </Button>
                         <Button
                           onClick={() => onProductSelect(product)}
                           variant="outline"
-                          className="flex-1"
+                          className="flex-1 text-xs h-9"
                         >
                           Details
                         </Button>
