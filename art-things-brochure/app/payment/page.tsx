@@ -66,7 +66,13 @@ export default function PaymentPage() {
       toast.success('Payment successful!')
     } catch (error) {
       console.error('Error creating order:', error)
-      toast.error('Failed to create order')
+      const errorMessage = error instanceof Error ? error.message : 'Failed to create order'
+      if (errorMessage.includes('Insufficient stock')) {
+        toast.error('Some items are out of stock. Please update your cart.')
+        router.push('/cart')
+      } else {
+        toast.error(errorMessage)
+      }
       setProcessing(false)
     }
   }
@@ -98,7 +104,13 @@ export default function PaymentPage() {
       toast.success('Order placed! Payment verification pending')
     } catch (error) {
       console.error('Error creating order:', error)
-      toast.error('Failed to create order')
+      const errorMessage = error instanceof Error ? error.message : 'Failed to create order'
+      if (errorMessage.includes('Insufficient stock')) {
+        toast.error('Some items are out of stock. Please update your cart.')
+        router.push('/cart')
+      } else {
+        toast.error(errorMessage)
+      }
       setProcessing(false)
     }
   }

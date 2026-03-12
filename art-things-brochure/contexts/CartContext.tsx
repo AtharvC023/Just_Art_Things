@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthContext';
 import { cartService, Cart, CartItem } from '@/lib/firebase/cartService';
+import { productService } from '@/lib/firebase/productService';
 import { toast } from 'sonner';
 
 interface CartContextType {
@@ -45,6 +46,23 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
 
     try {
+      // Check if product has stock
+      const hasStock = await productService.checkStock(productId, 1);
+      if (!hasStock) {
+        toast.error('This item is out of stock');
+        return;
+      }
+
+      // Check if item already in cart and validate total quantity
+      const existingItem = cart?.items.find(item => item.productId === productId);
+      const requestedQuantity = existingItem ? existingItem.quantity + 1 : 1;
+      
+      const canAddMore = await productService.checkStock(productId, requestedQuantity);
+      if (!canAddMore) {
+        toast.error('Not enough stock available');
+        return;
+      }
+
       await cartService.addToCart(user.uid, {
         productId,
         name,
@@ -64,6 +82,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     if (!user) return;
 
     try {
+      // Find the item to get productId
+      const item = cart?.items.find(i => i.id === itemId);
+      if (!item) return;
+
+      // Check stock availability for the new quantity
+      if (quantity > 0) {
+        const hasStock = await productService.checkStock(item.productId, quantity);
+        if (!hasStock) {
+          toast.error('Not enough stock available');
+          return;
+        }
+      }
+
       await cartService.updateQuantity(user.uid, itemId, quantity);
     } catch (error) {
       console.error('Error updating quantity:', error);

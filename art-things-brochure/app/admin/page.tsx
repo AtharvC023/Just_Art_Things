@@ -23,6 +23,8 @@ export default function AdminPage() {
     category: '',
     image: '',
     description: '',
+    price: 0,
+    stock: 10,
     featured: false,
   })
 
@@ -78,6 +80,8 @@ export default function AdminPage() {
       category: product.category,
       image: product.image,
       description: product.description,
+      price: product.price || 0,
+      stock: product.stock || 10,
       featured: product.featured || false,
     })
     setShowForm(true)
@@ -153,7 +157,7 @@ export default function AdminPage() {
             <h1 className="text-4xl font-serif font-bold">Admin Panel</h1>
             <p className="text-foreground/60">Manage your products • Drag cards to reorder</p>
           </div>
-          <Button onClick={() => { setShowForm(true); setEditingProduct(null); setFormData({ name: '', category: '', image: '', description: '', featured: false }) }}>
+          <Button onClick={() => { setShowForm(true); setEditingProduct(null); setFormData({ name: '', category: '', image: '', description: '', price: 0, stock: 10, featured: false }) }}>
             <Plus size={20} className="mr-2" />
             Add Product
           </Button>
@@ -197,6 +201,29 @@ export default function AdminPage() {
                   rows={3}
                   required
                 />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">Price (₹)</label>
+                  <Input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={formData.price}
+                    onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })}
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Stock Quantity</label>
+                  <Input
+                    type="number"
+                    min="0"
+                    value={formData.stock}
+                    onChange={(e) => setFormData({ ...formData, stock: parseInt(e.target.value) || 0 })}
+                    required
+                  />
+                </div>
               </div>
               <div className="flex items-center gap-2">
                 <input
@@ -247,6 +274,15 @@ export default function AdminPage() {
                       className={product.featured ? "fill-yellow-500 text-yellow-500" : "text-gray-400"} 
                     />
                   </button>
+                  {/* Stock Status Badge */}
+                  {product.stock !== undefined && (
+                    <div className={`absolute top-3 left-3 px-2 py-1 rounded-full text-xs font-medium ${
+                      product.stock > 10 ? 'bg-green-100 text-green-800' :
+                      product.stock > 0 ? 'bg-orange-100 text-orange-800' : 'bg-red-100 text-red-800'
+                    }`}>
+                      {product.stock > 0 ? `${product.stock} left` : 'Out of stock'}
+                    </div>
+                  )}
                 </div>
                 <div className="p-4">
                   <div className="flex items-center justify-between mb-2">
@@ -258,7 +294,19 @@ export default function AdminPage() {
                     )}
                   </div>
                   <h3 className="font-semibold mb-2">{product.name}</h3>
-                  <p className="text-sm text-foreground/70 mb-4">{product.description}</p>
+                  <p className="text-sm text-foreground/70 mb-3">{product.description}</p>
+                  
+                  {/* Price and Stock Info */}
+                  <div className="mb-4 space-y-1">
+                    {product.price && product.price > 0 && (
+                      <p className="text-lg font-bold text-primary">₹{product.price.toFixed(2)}</p>
+                    )}
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>Stock: {product.stock || 0}</span>
+                      <span>Sold: {product.soldCount || 0}</span>
+                    </div>
+                  </div>
+                  
                   <div className="flex gap-2">
                     <Button size="sm" variant="outline" onClick={() => handleEdit(product)}>
                       <Edit size={16} className="mr-1" />

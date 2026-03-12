@@ -50,6 +50,13 @@ export default function ProductGrid({
       alert('Please sign in to add items to cart')
       return
     }
+    
+    // Check if product is out of stock
+    if (product.stock !== undefined && product.stock <= 0) {
+      alert('This item is out of stock')
+      return
+    }
+    
     await addToCart(
       product.id,
       product.name,
@@ -215,13 +222,30 @@ export default function ProductGrid({
                     <p className="text-xs text-muted-foreground uppercase tracking-widest mb-2">{product.category}</p>
                     <h3 className="text-lg font-serif font-bold mb-2 text-foreground">{product.name}</h3>
                     <p className="text-foreground/70 text-sm mb-4 flex-grow">{product.description}</p>
+                    
+                    {/* Price and Stock Info */}
+                    <div className="mb-4">
+                      {product.price && product.price > 0 && (
+                        <p className="text-xl font-bold text-primary mb-1">₹{product.price.toFixed(2)}</p>
+                      )}
+                      {product.stock !== undefined && (
+                        <p className={`text-xs ${
+                          product.stock > 10 ? 'text-green-600' :
+                          product.stock > 0 ? 'text-orange-600' : 'text-red-600'
+                        }`}>
+                          {product.stock > 0 ? `${product.stock} in stock` : 'Out of stock'}
+                        </p>
+                      )}
+                    </div>
+                    
                     <div className="flex gap-2">
                       <Button
                         onClick={(e) => handleAddToCart(e, product)}
                         className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
+                        disabled={product.stock !== undefined && product.stock <= 0}
                       >
                         <ShoppingCart size={16} className="mr-2" />
-                        Add to Cart
+                        {product.stock !== undefined && product.stock <= 0 ? 'Out of Stock' : 'Add to Cart'}
                       </Button>
                       <Button
                         onClick={() => onProductSelect(product)}

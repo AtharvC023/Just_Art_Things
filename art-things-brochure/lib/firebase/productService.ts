@@ -37,7 +37,13 @@ export const productService = {
   },
 
   async addProduct(product: Omit<Product, 'id'>): Promise<string> {
-    const docRef = await addDoc(collection(db, PRODUCTS_COLLECTION), product);
+    const productWithDefaults = {
+      ...product,
+      stock: product.stock || 10,
+      soldCount: product.soldCount || 0,
+      price: product.price || 0
+    };
+    const docRef = await addDoc(collection(db, PRODUCTS_COLLECTION), productWithDefaults);
     return docRef.id;
   },
 
@@ -48,4 +54,33 @@ export const productService = {
   async deleteProduct(id: string): Promise<void> {
     await deleteDoc(doc(db, PRODUCTS_COLLECTION, id));
   },
+
+  async updateStock(productId: string, quantityPurchased: number): Promise<void> {
+    const productRef = doc(db, PRODUCTS_COLLECTION, productId);
+    const productSnap = await getDoc(productRef);
+    
+    if (productSnap.exists()) {
+      const product = productSnap.data() as Product;
+      const newStock = Math.max(0, (product.stock || 0) - quantityPurchased);
+      const newSoldCount = (product.soldCount || 0) + quantityPurchased;
+      
+      await updateDoc(productRef, {
+        stock: newStock,
+        soldCount: newSoldCount
+      });
+    }
+  },
+
+  async checkStock(productId: string, requestedQuantity: number): Promise<boolean> {
+    const product = await this.getProductById(productId);
+    return product ? (product.stock || 0) >= requestedQuantity : false;
+  },
+
+  async getPopularProducts(limit: number = 5): Promise<Product[]> {
+    const products = await this.getAllProducts();
+    return products
+      .filter(p => p.soldCount && p.soldCount > 0)
+      .sort((a, b) => (b.soldCount || 0) - (a.soldCount || 0))
+      .slice(0, limit);
+  }
 };
