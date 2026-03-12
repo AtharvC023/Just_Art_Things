@@ -7,8 +7,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card } from "@/components/ui/card"
-import { Plus, Edit, Trash2, ArrowLeft, Star } from "lucide-react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Plus, Edit, Trash2, ArrowLeft, Star, BarChart3, Package } from "lucide-react"
 import { useRouter } from "next/navigation"
+import AnalyticsDashboard from "@/components/analytics-dashboard"
 
 export default function AdminPage() {
   const router = useRouter()
@@ -155,13 +157,33 @@ export default function AdminPage() {
               Back to Home
             </Button>
             <h1 className="text-4xl font-serif font-bold">Admin Panel</h1>
-            <p className="text-foreground/60">Manage your products • Drag cards to reorder</p>
+            <p className="text-foreground/60">Manage your store and view analytics</p>
           </div>
-          <Button onClick={() => { setShowForm(true); setEditingProduct(null); setFormData({ name: '', category: '', image: '', description: '', price: 0, stock: 10, featured: false }) }}>
-            <Plus size={20} className="mr-2" />
-            Add Product
-          </Button>
         </div>
+
+        <Tabs defaultValue="analytics" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-2 max-w-md">
+            <TabsTrigger value="analytics" className="flex items-center gap-2">
+              <BarChart3 size={16} />
+              Analytics
+            </TabsTrigger>
+            <TabsTrigger value="products" className="flex items-center gap-2">
+              <Package size={16} />
+              Products
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="analytics">
+            <AnalyticsDashboard />
+          </TabsContent>
+
+          <TabsContent value="products" className="space-y-6">
+            <div className="flex justify-end">
+              <Button onClick={() => { setShowForm(true); setEditingProduct(null); setFormData({ name: '', category: '', image: '', description: '', price: 0, stock: 10, featured: false }) }}>
+                <Plus size={20} className="mr-2" />
+                Add Product
+              </Button>
+            </div>
 
         {showForm && (
           <Card className="p-6 mb-8">
