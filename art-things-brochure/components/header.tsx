@@ -47,6 +47,15 @@ export default function Header() {
 
   const isAdmin = user?.email && process.env.NEXT_PUBLIC_ADMIN_EMAIL?.split(',').map(e => e.trim()).includes(user.email)
 
+  // Debug logging
+  useEffect(() => {
+    if (user?.email) {
+      console.log('Current user email:', user.email)
+      console.log('Admin emails:', process.env.NEXT_PUBLIC_ADMIN_EMAIL)
+      console.log('Is admin:', isAdmin)
+    }
+  }, [user, isAdmin])
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault()
     
