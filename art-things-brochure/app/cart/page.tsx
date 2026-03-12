@@ -116,87 +116,88 @@ export default function CartPage() {
                   const exceedsStock = item.quantity > currentStock
                   
                   return (
-                  <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 20 }}
-                  >
-                    <Card className={`p-4 ${exceedsStock ? 'border-red-200 bg-red-50/50' : ''}`}>
-                      {exceedsStock && (
-                        <div className="mb-3 p-2 bg-red-100 border border-red-200 rounded-lg flex items-center gap-2">
-                          <AlertTriangle className="h-4 w-4 text-red-600" />
-                          <span className="text-sm text-red-700">
-                            Only {currentStock} items available. Please reduce quantity.
-                          </span>
-                        </div>
-                      )}
-                      
-                      <div className="flex gap-4">
-                        <div className="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
+                    <motion.div
+                      key={item.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 20 }}
+                    >
+                      <Card className={`p-4 ${exceedsStock ? 'border-red-200 bg-red-50/50' : ''}`}>
+                        {exceedsStock && (
+                          <div className="mb-3 p-2 bg-red-100 border border-red-200 rounded-lg flex items-center gap-2">
+                            <AlertTriangle className="h-4 w-4 text-red-600" />
+                            <span className="text-sm text-red-700">
+                              Only {currentStock} items available. Please reduce quantity.
+                            </span>
+                          </div>
+                        )}
                         
-                        <div className="flex-grow">
-                          <div className="flex justify-between items-start mb-2">
-                            <div>
-                              <h3 className="font-semibold text-lg">{item.name}</h3>
-                              <p className="text-sm text-muted-foreground">{item.category}</p>
-                              {!stockLoading && (
-                                <StockStatus stock={currentStock} variant="text" className="mt-1" />
-                              )}
-                            </div>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => removeFromCart(item.id)}
-                              className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
+                        <div className="flex gap-4">
+                          <div className="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-full h-full object-cover"
+                            />
                           </div>
-
-                          <div className="flex justify-between items-center mt-4">
-                            <div className="flex items-center gap-2">
+                          
+                          <div className="flex-grow">
+                            <div className="flex justify-between items-start mb-2">
+                              <div>
+                                <h3 className="font-semibold text-lg">{item.name}</h3>
+                                <p className="text-sm text-muted-foreground">{item.category}</p>
+                                {!stockLoading && (
+                                  <StockStatus stock={currentStock} variant="text" className="mt-1" />
+                                )}
+                              </div>
                               <Button
-                                variant="outline"
+                                variant="ghost"
                                 size="icon"
-                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                disabled={item.quantity <= 1}
-                                className="h-8 w-8"
+                                onClick={() => removeFromCart(item.id)}
+                                className="text-red-500 hover:text-red-700 hover:bg-red-50"
                               >
-                                <Minus className="h-3 w-3" />
+                                <Trash2 className="h-4 w-4" />
                               </Button>
-                              <span className="w-12 text-center font-medium">{item.quantity}</span>
-                              <Button
-                                variant="outline"
-                                size="icon"
-                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                disabled={item.quantity >= currentStock || isOutOfStock}
-                                className="h-8 w-8"
-                              >
-                                <Plus className="h-3 w-3" />
-                              </Button>
-                              {currentStock > 0 && (
-                                <span className="text-xs text-muted-foreground ml-2">
-                                  Max: {currentStock}
-                                </span>
-                              )}
                             </div>
-                            <div className="text-right">
-                              <p className="text-lg font-bold">₹{(item.price * item.quantity).toFixed(2)}</p>
-                              <p className="text-sm text-muted-foreground">₹{item.price.toFixed(2)} each</p>
+
+                            <div className="flex justify-between items-center mt-4">
+                              <div className="flex items-center gap-2">
+                                <Button
+                                  variant="outline"
+                                  size="icon"
+                                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                  disabled={item.quantity <= 1}
+                                  className="h-8 w-8"
+                                >
+                                  <Minus className="h-3 w-3" />
+                                </Button>
+                                <span className="w-12 text-center font-medium">{item.quantity}</span>
+                                <Button
+                                  variant="outline"
+                                  size="icon"
+                                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                  disabled={item.quantity >= currentStock || isOutOfStock}
+                                  className="h-8 w-8"
+                                >
+                                  <Plus className="h-3 w-3" />
+                                </Button>
+                                {currentStock > 0 && (
+                                  <span className="text-xs text-muted-foreground ml-2">
+                                    Max: {currentStock}
+                                  </span>
+                                )}
+                              </div>
+                              <div className="text-right">
+                                <p className="text-lg font-bold">₹{(item.price * item.quantity).toFixed(2)}</p>
+                                <p className="text-sm text-muted-foreground">₹{item.price.toFixed(2)} each</p>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </Card>
-                  </motion.div>
-                )})
+                      </Card>
+                    </motion.div>
+                  )
+                })}
 
                 <Button
                   variant="outline"
@@ -229,27 +230,33 @@ export default function CartPage() {
                     </div>
                   </div>
 
-                  const hasStockIssues = cart.items.some(item => {
-                    const currentStock = stockInfo[item.productId] || 0
-                    return item.quantity > currentStock || currentStock === 0
-                  })
+                  {(() => {
+                    const hasStockIssues = cart.items.some(item => {
+                      const currentStock = stockInfo[item.productId] || 0
+                      return item.quantity > currentStock || currentStock === 0
+                    })
 
-                  <Button 
-                    className="w-full mb-3"
-                    size="lg"
-                    onClick={() => router.push('/checkout')}
-                    disabled={hasStockIssues}
-                  >
-                    {hasStockIssues ? 'Fix Stock Issues' : 'Proceed to Checkout'}
-                  </Button>
-                  
-                  <Button
-                    variant="outline"
-                    className="w-full"
-                    onClick={() => router.push('/home')}
-                  >
-                    Continue Shopping
-                  </Button>
+                    return (
+                      <>
+                        <Button 
+                          className="w-full mb-3"
+                          size="lg"
+                          onClick={() => router.push('/checkout')}
+                          disabled={hasStockIssues}
+                        >
+                          {hasStockIssues ? 'Fix Stock Issues' : 'Proceed to Checkout'}
+                        </Button>
+                        
+                        <Button
+                          variant="outline"
+                          className="w-full"
+                          onClick={() => router.push('/home')}
+                        >
+                          Continue Shopping
+                        </Button>
+                      </>
+                    )
+                  })()}
                 </Card>
               </div>
             </div>

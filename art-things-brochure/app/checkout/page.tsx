@@ -338,26 +338,27 @@ export default function CheckoutPage() {
                     const hasStockIssue = currentStock !== undefined && (currentStock === 0 || item.quantity > currentStock)
                     
                     return (
-                    <div key={item.id} className={`flex gap-3 ${hasStockIssue ? 'opacity-60' : ''}`}>
-                      <div className="w-16 h-16 bg-gray-100 rounded overflow-hidden flex-shrink-0">
-                        <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                      <div key={item.id} className={`flex gap-3 ${hasStockIssue ? 'opacity-60' : ''}`}>
+                        <div className="w-16 h-16 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+                          <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                        </div>
+                        <div className="flex-1">
+                          <p className="font-medium text-sm">{item.name}</p>
+                          <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
+                          {currentStock !== undefined && (
+                            <StockStatus stock={currentStock} variant="text" className="text-xs" />
+                          )}
+                          <p className="text-sm font-bold">₹{(item.price * item.quantity).toFixed(2)}</p>
+                          {hasStockIssue && (
+                            <p className="text-xs text-red-600 mt-1">
+                              {currentStock === 0 ? 'Out of stock' : `Only ${currentStock} available`}
+                            </p>
+                          )}
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <p className="font-medium text-sm">{item.name}</p>
-                        <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
-                        {currentStock !== undefined && (
-                          <StockStatus stock={currentStock} variant="text" className="text-xs" />
-                        )}
-                        <p className="text-sm font-bold">₹{(item.price * item.quantity).toFixed(2)}</p>
-                        {hasStockIssue && (
-                          <p className="text-xs text-red-600 mt-1">
-                            {currentStock === 0 ? 'Out of stock' : `Only ${currentStock} available`}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  )})
-                  }
+                    )
+                  })}
+                </div>
 
                 <Separator className="my-4" />
 

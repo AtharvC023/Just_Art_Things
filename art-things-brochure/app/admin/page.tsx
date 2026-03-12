@@ -344,5 +344,7 @@ export default function AdminPage() {
             )}
           </TabsContent>
         </Tabs>
+      </div>
+    </div>
   )
 }
