@@ -87,6 +87,13 @@ export default function AnalyticsDashboard({ className = "" }: AnalyticsDashboar
       bgColor: "bg-purple-100"
     },
     {
+      title: "Total Users",
+      value: analytics.totalUsers,
+      icon: Users,
+      color: "text-cyan-600",
+      bgColor: "bg-cyan-100"
+    },
+    {
       title: "Items Sold",
       value: analytics.totalSoldItems,
       icon: TrendingUp,
@@ -112,7 +119,7 @@ export default function AnalyticsDashboard({ className = "" }: AnalyticsDashboar
   return (
     <div className={`space-y-8 ${className}`}>
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {statCards.map((stat, index) => (
           <motion.div
             key={stat.title}
