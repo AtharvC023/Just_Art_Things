@@ -272,11 +272,11 @@ export default function AdminPage() {
             {loading ? (
               <div className="text-center py-20">Loading...</div>
             ) : (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                 {products.map((product) => (
                   <Card 
                     key={product.id} 
-                    className={`overflow-hidden cursor-move hover:shadow-xl transition-all ${
+                    className={`group overflow-hidden cursor-move hover:shadow-lg transition-all ${
                       draggedProduct?.id === product.id ? 'opacity-50 scale-95' : ''
                     }`}
                     draggable
@@ -284,57 +284,56 @@ export default function AdminPage() {
                     onDragOver={handleDragOver}
                     onDrop={() => handleDrop(product)}
                   >
-                    <div className="relative aspect-[5/4] bg-white">
+                    <div className="relative aspect-square bg-white">
                       <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                       <button
                         onClick={() => toggleFeatured(product)}
-                        className="absolute top-3 right-3 p-2 rounded-full bg-white/90 hover:bg-white shadow-md transition-all"
+                        className="absolute top-2 right-2 p-1.5 rounded-full bg-white/90 hover:bg-white shadow-md transition-all opacity-0 group-hover:opacity-100"
                         title={product.featured ? "Remove from carousel" : "Add to carousel"}
                       >
                         <Star 
-                          size={20} 
+                          size={14} 
                           className={product.featured ? "fill-yellow-500 text-yellow-500" : "text-gray-400"} 
                         />
                       </button>
                       {product.stock !== undefined && (
-                        <div className={`absolute top-3 left-3 px-2 py-1 rounded-full text-xs font-medium ${
+                        <div className={`absolute top-2 left-2 px-1.5 py-0.5 rounded text-[10px] font-medium ${
                           product.stock > 10 ? 'bg-green-100 text-green-800' :
                           product.stock > 0 ? 'bg-orange-100 text-orange-800' : 'bg-red-100 text-red-800'
                         }`}>
-                          {product.stock > 0 ? `${product.stock} left` : 'Out of stock'}
+                          {product.stock > 0 ? `${product.stock}` : 'Out'}
+                        </div>
+                      )}
+                      {product.featured && (
+                        <div className="absolute bottom-2 left-2">
+                          <span className="text-[10px] bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-1.5 py-0.5 rounded">
+                            ⭐
+                          </span>
                         </div>
                       )}
                     </div>
-                    <div className="p-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <p className="text-xs text-muted-foreground uppercase">{product.category}</p>
-                        {product.featured && (
-                          <span className="text-xs bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-2 py-1 rounded-full">
-                            ⭐ Featured
-                          </span>
-                        )}
-                      </div>
-                      <h3 className="font-semibold mb-2">{product.name}</h3>
-                      <p className="text-sm text-foreground/70 mb-3">{product.description}</p>
+                    <div className="p-3">
+                      <p className="text-[10px] text-muted-foreground uppercase mb-1 truncate">{product.category}</p>
+                      <h3 className="font-semibold text-sm mb-1 truncate" title={product.name}>{product.name}</h3>
+                      <p className="text-xs text-foreground/70 mb-2 line-clamp-2 h-8">{product.description}</p>
                       
-                      <div className="mb-4 space-y-1">
+                      <div className="mb-3">
                         {product.price && product.price > 0 && (
-                          <p className="text-lg font-bold text-primary">₹{product.price.toFixed(2)}</p>
+                          <p className="text-base font-bold text-primary">₹{product.price.toFixed(0)}</p>
                         )}
-                        <div className="flex justify-between text-xs text-muted-foreground">
+                        <div className="flex justify-between text-[10px] text-muted-foreground mt-1">
                           <span>Stock: {product.stock || 0}</span>
                           <span>Sold: {product.soldCount || 0}</span>
                         </div>
                       </div>
                       
-                      <div className="flex gap-2">
-                        <Button size="sm" variant="outline" onClick={() => handleEdit(product)}>
-                          <Edit size={16} className="mr-1" />
+                      <div className="flex gap-1">
+                        <Button size="sm" variant="outline" onClick={() => handleEdit(product)} className="flex-1 h-7 text-xs px-2">
+                          <Edit size={12} className="mr-1" />
                           Edit
                         </Button>
-                        <Button size="sm" variant="destructive" onClick={() => handleDelete(product.id)}>
-                          <Trash2 size={16} className="mr-1" />
-                          Delete
+                        <Button size="sm" variant="destructive" onClick={() => handleDelete(product.id)} className="h-7 px-2">
+                          <Trash2 size={12} />
                         </Button>
                       </div>
                     </div>
