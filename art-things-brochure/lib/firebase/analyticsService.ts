@@ -108,21 +108,36 @@ export const analyticsService = {
   calculateRevenueByMonth(orders: any[]): Array<{ month: string; revenue: number; orders: number }> {
     const monthlyData: { [key: string]: { revenue: number; orders: number } } = {};
     
-    // Get last 6 months
     const months = [];
     for (let i = 5; i >= 0; i--) {
       const date = new Date();
       date.setMonth(date.getMonth() - i);
-      const monthKey = date.toISOString().slice(0, 7); // YYYY-MM format
+      const monthKey = date.toISOString().slice(0, 7);
       const monthName = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
       months.push({ key: monthKey, name: monthName });
       monthlyData[monthKey] = { revenue: 0, orders: 0 };
     }
 
-    // Process orders
     orders.forEach(order => {
       if (order.paymentStatus.toLowerCase().includes('paid')) {
-        const orderDate = order.createdAt instanceof Date ? order.createdAt : new Date(order.createdAt);
+        let orderDate: Date;
+        
+        if (order.createdAt instanceof Date) {
+          orderDate = order.createdAt;
+        } else if (order.createdAt?.toDate) {
+          orderDate = order.createdAt.toDate();
+        } else if (order.createdAt?.seconds) {
+          orderDate = new Date(order.createdAt.seconds * 1000);
+        } else if (typeof order.createdAt === 'string') {
+          orderDate = new Date(order.createdAt);
+        } else {
+          return;
+        }
+        
+        if (isNaN(orderDate.getTime())) {
+          return;
+        }
+        
         const monthKey = orderDate.toISOString().slice(0, 7);
         
         if (monthlyData[monthKey]) {
