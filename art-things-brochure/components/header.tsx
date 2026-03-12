@@ -87,7 +87,7 @@ export default function Header() {
           <span className="text-2xl font-serif font-bold tracking-tight text-foreground">Just Artist Things</span>
         </div>
 
-        <div className="hidden md:flex items-center gap-12">
+        <div className="hidden md:flex items-center gap-8">
           {navItems.map((item) => (
             <a
               key={item.name}
@@ -103,13 +103,13 @@ export default function Header() {
               onClick={() => router.push('/orders')}
               className="text-sm font-medium text-foreground hover:text-foreground/60 transition-colors cursor-pointer"
             >
-              My Orders
+              Orders
             </button>
           )}
           {isAdmin && (
             <button
               onClick={() => router.push('/admin')}
-              className="text-sm font-medium text-foreground hover:text-foreground/60 transition-colors cursor-pointer"
+              className="text-sm font-medium text-foreground hover:text-foreground/60 transition-colors cursor-pointer bg-teal-100 dark:bg-teal-900/30 px-3 py-1 rounded-md text-teal-700 dark:text-teal-300"
             >
               Admin
             </button>
@@ -217,7 +217,7 @@ export default function Header() {
                 onClick={() => router.push('/orders')}
                 className="text-sm font-medium text-foreground cursor-pointer text-left"
               >
-                My Orders
+                Orders
               </button>
             )}
             {isAdmin && (
